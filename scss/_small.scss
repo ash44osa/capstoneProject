@@ -1,0 +1,323 @@
+/* Prevent font size adjustment after orientation changes in IE and iOS */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Box-sizing and zeroing default margins/padding */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------- BODY --------------------------- */
+body {
+  font-family: $defaultFont;
+  font-weight: $lightWeight;
+  min-width: 320px;
+  font-size: 1rem;
+}
+
+/* --------------------------- HEADER --------------------------- */
+#headerWrapper {
+  border-bottom: 1px solid $greyColor;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 50px auto 44px;
+  column-gap: $gutter;
+  align-items: center;
+  padding: 0.5rem $gutter;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  span {
+    font-size: 1.6rem;
+    font-weight: $lightWeight;
+    color: $primaryColor;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  @media (min-width: 601px) and (max-width: 1200px) {
+    img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  @media (min-width: 1201px) {
+    img {
+      width: 135px;
+      height: 135px;
+    }
+  }
+}
+
+/* --------------------------- NAVIGATION --------------------------- */
+#primaryNav button::before {
+  content: "\2630"; // hamburger icon
+}
+
+#primaryNav button {
+  border: none;
+  background: none;
+  font-size: 2rem;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+#primaryNav ul {
+  position: absolute;
+  right: $gutter;
+  width: 200px;
+  background-color: #fff;
+  list-style-type: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #aaa;
+  display: none;
+  text-align: right;
+
+  li a {
+    color: $primaryColor;
+    display: block;
+    padding: 0.75rem $gutter;
+    text-decoration: none;
+  }
+
+  li.active a {
+    background-color: $secondaryColor;
+    color: white;
+    font-weight: $normalWeight;
+  }
+}
+
+#primaryNav button.open::before {
+  content: "\2715"; // X icon
+}
+
+#primaryNav ul.open {
+  display: block;
+}
+
+/* --------------------------- MAIN --------------------------- */
+main {
+  h1 {
+    padding: 1rem $gutter 0.5rem;
+    font-size: 1.5rem;
+    color: $secondaryColor;
+    font-weight: $lightWeight;
+  }
+
+  p {
+    padding: 0.5rem $gutter;
+    color: #333;
+    line-height: $leading;
+  }
+}
+
+/* --------------------------- HERO SECTION --------------------------- */
+.hero {
+  position: relative;
+
+  video {
+    width: 100%;
+    height: auto;
+  }
+
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: white;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      text-shadow: 0 0 4px #000;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      text-shadow: 0 0 4px #000;
+      font-size: 1.2rem;
+      color: white;
+      max-width: 80%;
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero div {
+    padding: 15px;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .hero div h3 {
+    font-size: 1.25rem;
+  }
+
+  .hero div p {
+    font-size: 0.9rem;
+  }
+}
+
+/* --------------------------- GRID SYSTEM --------------------------- */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0;
+  padding: 0 8px;
+}
+
+.column {
+  padding: 0 8px;
+  margin: 8px 0;
+}
+
+@for $i from 1 through 12 {
+  $w: calc($i / 12) * 100%;
+  .small-#{$i} {
+    flex-basis: $w;
+  }
+}
+
+/* --------------------------- CARD STYLES --------------------------- */
+.allcards {
+  padding: 0 $gutter;
+
+  section {
+    border: 1px solid $cardBorderColor;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      background-color: $cardHeaderBgColor;
+      font-size: 1.25rem;
+      text-align: center;
+      padding: 0.75rem $gutter;
+    }
+
+    img,
+    img.e2e {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    p {
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.6;
+      padding: 0.75rem $gutter;
+    }
+
+    a {
+      display: block;
+      background-color: $buttonBgColor;
+      padding: 0.75rem;
+      text-align: center;
+      border-radius: 0 0 8px 8px;
+      color: $buttonTextColor;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($buttonBgColor, 10%);
+      }
+    }
+  }
+}
+/* --------------------------- FOOTER --------------------------- */
+#footerWrapper {
+  background-color: $footerBgColor;
+  color: $footerTextColor;
+}
+
+footer {
+  padding: 1rem $gutter;
+  text-align: center;
+
+  section.contact {
+    p {
+      font-size: 1.2rem;
+      margin: 0.5rem;
+    }
+
+    ion-icon {
+      color: $iconColor;
+      padding-right: 5px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+
+  section.social {
+    display: flex;
+    justify-content: center;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: solid 1px $socialBorderColor;
+      font-size: 2rem;
+      margin: 0.5rem;
+      padding: 0.5rem;
+      color: inherit;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,10 +1,10 @@
-/* Prevent font size adjustment after orientation changes in IE and iOS */
+/* --------------------------- RESET --------------------------- */
+/* Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS */
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
 
-/* Box-sizing and zeroing default margins/padding */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,6 +17,8 @@ body {
   font-weight: $lightWeight;
   min-width: 320px;
   font-size: 1rem;
+  color: $primaryColor;
+  background-color: #fff;
 }
 
 /* --------------------------- HEADER --------------------------- */
@@ -42,9 +44,11 @@ header {
     color: $primaryColor;
   }
 
-  img {
-    width: 50px;
-    height: 50px;
+  @media (max-width: 600px) {
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   @media (min-width: 601px) and (max-width: 1200px) {
@@ -62,9 +66,51 @@ header {
   }
 }
 
-/* --------------------------- NAVIGATION --------------------------- */
+/* --------------------------- HAMBURGER NAV --------------------------- */
+#hamburgerBtn {
+  position: relative;
+  height: 44px;
+  width: 44px;
+  cursor: pointer;
+  border: 1px solid $greyColor;
+
+  .top,
+  .bottom {
+    position: absolute;
+    height: 2px;
+    width: 50%;
+    left: 25%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .top {
+    top: 33%;
+  }
+
+  .bottom {
+    top: 62%;
+  }
+}
+
+#hamburgerBtn.open {
+  .top {
+    transform: rotate(45deg);
+    top: 48%;
+    width: 60%;
+    left: 20%;
+  }
+
+  .bottom {
+    transform: rotate(-45deg);
+    top: 48%;
+    width: 60%;
+    left: 20%;
+  }
+}
+
+/* --------------------------- NAVIGATION MENU --------------------------- */
 #primaryNav button::before {
-  content: "\2630"; // hamburger icon
+  content: "\2630";
 }
 
 #primaryNav button {
@@ -83,11 +129,13 @@ header {
   width: 200px;
   background-color: #fff;
   list-style-type: none;
-  border: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
+  border: 1px solid $greyColor;
   border-radius: 5px;
-  box-shadow: 0 0 10px #aaa;
-  display: none;
+  box-shadow: 0 0 10px $greyColor;
   text-align: right;
+  display: none;
 
   li a {
     color: $primaryColor;
@@ -98,13 +146,13 @@ header {
 
   li.active a {
     background-color: $secondaryColor;
-    color: white;
+    color: $buttonTextColor;
     font-weight: $normalWeight;
   }
 }
 
 #primaryNav button.open::before {
-  content: "\2715"; // X icon
+  content: "\2715";
 }
 
 #primaryNav ul.open {
@@ -114,7 +162,7 @@ header {
 /* --------------------------- MAIN --------------------------- */
 main {
   h1 {
-    padding: 1rem $gutter 0.5rem;
+    padding: 1rem $gutter 0.5rem $gutter;
     font-size: 1.5rem;
     color: $secondaryColor;
     font-weight: $lightWeight;
@@ -122,12 +170,21 @@ main {
 
   p {
     padding: 0.5rem $gutter;
-    color: #333;
+    color: $primaryColor;
     line-height: $leading;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
   }
 }
 
-/* --------------------------- HERO SECTION --------------------------- */
+/* --------------------------- HERO --------------------------- */
 .hero {
   position: relative;
 
@@ -142,7 +199,7 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    color: white;
+    color: $buttonTextColor;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.4) 0%,
@@ -156,18 +213,20 @@ main {
     align-items: center;
 
     h3 {
-      text-shadow: 0 0 4px #000;
+      text-shadow: 0 0 4px $primaryColor;
       font-size: 2rem;
+      line-height: 1.4;
       margin-bottom: 1rem;
     }
 
     p {
-      text-shadow: 0 0 4px #000;
+      text-shadow: 0 0 4px $primaryColor;
       font-size: 1.2rem;
-      color: white;
+      line-height: 1.6;
+      margin: 0;
+      color: $buttonTextColor;
       max-width: 80%;
       text-align: center;
-      margin: 0;
     }
   }
 }
@@ -187,91 +246,124 @@ main {
 }
 
 @media (max-width: 480px) {
-  .hero div h3 {
-    font-size: 1.25rem;
-  }
+  .hero div {
+    padding: 15px;
 
-  .hero div p {
-    font-size: 0.9rem;
-  }
-}
-
-/* --------------------------- GRID SYSTEM --------------------------- */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 1rem 0;
-  padding: 0 8px;
-}
-
-.column {
-  padding: 0 8px;
-  margin: 8px 0;
-}
-
-@for $i from 1 through 12 {
-  $w: calc($i / 12) * 100%;
-  .small-#{$i} {
-    flex-basis: $w;
-  }
-}
-
-/* --------------------------- CARD STYLES --------------------------- */
-.allcards {
-  padding: 0 $gutter;
-
-  section {
-    border: 1px solid $cardBorderColor;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 1rem 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    h2 {
-      background-color: $cardHeaderBgColor;
+    h3 {
       font-size: 1.25rem;
-      text-align: center;
-      padding: 0.75rem $gutter;
-    }
-
-    img,
-    img.e2e {
-      width: 100%;
-      height: auto;
-      display: block;
     }
 
     p {
-      font-style: italic;
-      font-size: 1rem;
-      line-height: 1.6;
-      padding: 0.75rem $gutter;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+/* --------------------------- CARD GRID --------------------------- */
+div.allcards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  padding: 2rem $gutter;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .card {
+    background-color: $cardHeaderBgColor;
+    border: 1px solid $cardBorderColor;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    a {
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
       display: block;
-      background-color: $buttonBgColor;
-      padding: 0.75rem;
-      text-align: center;
-      border-radius: 0 0 8px 8px;
-      color: $buttonTextColor;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
+    }
 
-      &:hover {
-        background-color: darken($buttonBgColor, 10%);
+    .card-content {
+      padding: 1.5rem;
+
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: $primaryColor;
+      }
+
+      p {
+        font-size: 1rem;
+        color: $greyColor;
+        line-height: $leading;
+      }
+
+      a.button {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        background-color: $buttonBgColor;
+        color: $buttonTextColor;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($buttonBgColor, 10%);
+        }
       }
     }
   }
 }
+
+@media (min-width: 768px) {
+  div.allcards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  div.allcards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  div.allcards {
+    grid-template-columns: repeat(4, 1fr);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 1rem;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem $gutter;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .column {
+    flex: 1 1 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+  }
+}
+
 /* --------------------------- FOOTER --------------------------- */
 #footerWrapper {
   background-color: $footerBgColor;
@@ -286,11 +378,6 @@ footer {
     p {
       font-size: 1.2rem;
       margin: 0.5rem;
-    }
-
-    ion-icon {
-      color: $iconColor;
-      padding-right: 5px;
     }
 
     a {
@@ -308,7 +395,7 @@ footer {
       display: flex;
       align-items: center;
       justify-content: center;
-      border: solid 1px $socialBorderColor;
+      border: solid 1px $primaryColor;
       font-size: 2rem;
       margin: 0.5rem;
       padding: 0.5rem;
@@ -318,6 +405,19 @@ footer {
       height: 44px;
       transition: background-color 0.3s ease;
       text-decoration: none;
+
+      &:hover {
+        background-color: $primaryColor;
+      }
     }
+  }
+
+  section.location {
+    font-size: 1.5rem;
+  }
+
+  p.legal {
+    margin: 0;
+    font-weight: $lightWeight;
   }
 }
